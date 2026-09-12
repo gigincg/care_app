@@ -24,14 +24,6 @@ interface Manifest {
   routes: Record<string, (...args: any) => React.ReactNode>;
   extends: string[];
   components: {
-    EncounterOverviewTop: React.LazyExoticComponent<
-      React.FC<{
-        encounter: { id: string };
-        patientId: string;
-        encounterId: string;
-        className?: string;
-      }>
-    >;
     PatientHomeActions: React.LazyExoticComponent<
       React.FC<{
         patient: { id: string };
@@ -40,6 +32,15 @@ interface Manifest {
       }>
     >;
   };
+  encounterTabs?: Record<
+    string,
+    React.LazyExoticComponent<
+      React.FC<{
+        encounter: { facility: { id: string } };
+        patient: { id: string };
+      }>
+    >
+  >;
   navItems?: NavigationLink[];
   userNavItems?: NavigationLink[];
   adminNavItems?: NavigationLink[];
@@ -58,17 +59,22 @@ const manifest: Manifest = {
         <NutritionPage patientId={patientId} />
       </Page>
     ),
+    "/facility/:facilityId/nutrition": ({ facilityId }) => (
+      <Page>
+        <NutritionPage facilityId={facilityId} />
+      </Page>
+    ),
   },
   extends: [],
   components: {
-    EncounterOverviewTop: lazy(
-      () => import("./components/EncounterOverviewTop"),
-    ),
     PatientHomeActions: lazy(
       () => import("./components/PatientHomeActions"),
     ),
   },
-  navItems: [{ url: "/nutrition", name: "nutrition__page_title" }],
+  encounterTabs: {
+    nutrition: lazy(() => import("./components/EncounterNutritionTab")),
+  },
+  navItems: [{ url: "nutrition", name: "Nutrition" }],
   userNavItems: [],
   adminNavItems: [],
 };

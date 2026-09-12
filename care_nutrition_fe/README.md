@@ -7,7 +7,7 @@ The manifest contributes:
 
 - `/nutrition` and `/nutrition/:patientId` staff routes;
 - a `PatientHomeActions` shortcut on the patient dashboard;
-- an `EncounterOverviewTop` card on encounter overview pages;
+- a native Nutrition tab on patient encounters;
 - a Nutrition navigation item.
 
 Run `npm install && npm run dev` to serve the remote entry on port `4174`. (frontend)

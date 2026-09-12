@@ -22,10 +22,19 @@ function localDateTime() {
     .slice(0, 16);
 }
 
-export default function NutritionPage({ patientId }: { patientId?: string }) {
+export default function NutritionPage({
+  patientId,
+  facilityId,
+}: {
+  patientId?: string;
+  facilityId?: string;
+}) {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
-  const facility = new URLSearchParams(window.location.search).get("facility") ?? "";
+  const facility =
+    facilityId ??
+    new URLSearchParams(window.location.search).get("facility") ??
+    "";
   const [patient, setPatient] = useState(patientId ?? "");
   const queryRoot = ["care_nutrition", patient, facility];
   const enabled = Boolean(patient);
@@ -149,6 +158,7 @@ export default function NutritionPage({ patientId }: { patientId?: string }) {
       ) : null}
       <ErrorMessage
         error={measurements.error ?? assessments.error ?? supplementations.error}
+        fallbackKey="nutrition__load_error"
       />
 
       <section className="grid gap-6 lg:grid-cols-3">
@@ -293,10 +303,16 @@ function SaveButton({ pending }: { pending: boolean }) {
   return <Button className="mt-4 w-full" disabled={pending} type="submit">{pending ? t("nutrition__saving") : t("nutrition__save")}</Button>;
 }
 
-function ErrorMessage({ error }: { error: unknown }) {
+function ErrorMessage({
+  error,
+  fallbackKey = "nutrition__save_error",
+}: {
+  error: unknown;
+  fallbackKey?: string;
+}) {
   const { t } = useTranslation();
   if (!error) return null;
-  return <p className="mt-2 text-sm text-red-700" role="alert">{error instanceof ApiError ? error.message : t("nutrition__save_error")}</p>;
+  return <p className="mt-2 text-sm text-red-700" role="alert">{error instanceof ApiError ? error.message : t(fallbackKey)}</p>;
 }
 
 function SummaryCard({ icon, label, value }: { icon: ReactNode; label: string; value: number }) {
