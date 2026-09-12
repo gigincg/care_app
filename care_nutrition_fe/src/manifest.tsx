@@ -24,6 +24,14 @@ interface Manifest {
   routes: Record<string, (...args: any) => React.ReactNode>;
   extends: string[];
   components: {
+    EncounterOverviewTop: React.LazyExoticComponent<
+      React.FC<{
+        encounter: { id: string };
+        patientId: string;
+        encounterId: string;
+        className?: string;
+      }>
+    >;
     PatientHomeActions: React.LazyExoticComponent<
       React.FC<{
         patient: { id: string };
@@ -53,6 +61,9 @@ const manifest: Manifest = {
   },
   extends: [],
   components: {
+    EncounterOverviewTop: lazy(
+      () => import("./components/EncounterOverviewTop"),
+    ),
     PatientHomeActions: lazy(
       () => import("./components/PatientHomeActions"),
     ),

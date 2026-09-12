@@ -42,5 +42,7 @@
   "nutrition__no_assessments": "No nutrition assessments recorded.",
   "nutrition__no_supplementation": "No supplementation planned.",
   "nutrition__mark_completed": "Mark completed",
-  "nutrition__save_error": "Unable to save the record."
+  "nutrition__save_error": "Unable to save the record.",
+  "nutrition__encounter_title": "Nutrition programme",
+  "nutrition__encounter_description": "Review growth, assessment, and supplementation records for this patient."
 }
